@@ -6,28 +6,32 @@
     <title>To do list</title>
     <script src="todo.js" defer></script>
     <link rel="stylesheet" href="todo.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
 
     <header>
         <h1>To do list</h1>
-        <button id = "OpenPopUp">Create task</button>
+        <button id = "OpenPopUp">Create Task</button>
     </header>
 
-    <div id = "popup" class = "closed" >
-        <h1>Create Task</h1>
-        <p>Enter task name</p>
-        <input id="name">
-        <p>Select task type</p>
-        <input id="taskType">
-        <button id="create">Create</button>
+    <div id = "taskMenu">
+            <div id = "popup" class = "closed" >
+            <h1>Create Task</h1>
+            <p>Enter task name</p>
+            <input id="name">
+            <p>Select task type</p>
+            <input id="taskType">
+            <button id="create">Create +</button>
+        </div>
     </div>
 
     <main>
-
     </main>
+
     <footer>
         <button id = "refresh">Refresh</button>
+        <p>Mario Østervold Production</p>
     </footer>
 </body>
 </html>
