@@ -50,6 +50,9 @@ function createTask() {
   visibility.classList.remove("open");
   visibility.classList.add("closed");
 
+  let body = document.querySelector("Body");
+  body.classList.remove("bodyOpen");
+
   updateHTML();
 }
 
@@ -77,10 +80,10 @@ function updateHTML() {
     newDiv.className = "task";
 
     const newTaskName = document.createElement("p");
-    newTaskName.innerText = task.getName();
+    newTaskName.innerText = "Task: " + task.getName();
 
     const newTaskType = document.createElement("p");
-    newTaskType.innerText = task.getType();
+    newTaskType.innerText = "Type: " + task.getType();
 
     const newTaskBox = document.createElement("input");
     newTaskBox.type = "checkbox";
@@ -108,6 +111,9 @@ function taskMenu() {
   let visibility = document.getElementById("popup");
   visibility.classList.remove("closed");
   visibility.classList.add("open");
+
+  let body = document.querySelector("Body");
+  body.classList.add("bodyOpen");
 
   // let body = document.querySelector("Body")
   // body.style.setProperty("background", "rgba(0, 0, 0, 0.2)")
