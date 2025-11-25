@@ -29,6 +29,13 @@ header {
     justify-content: space-between;
 }
 
+main {
+    border-top: 2px solid rgb(200, 200, 200);
+    border-bottom: 2px solid rgb(200, 200, 200);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 footer {
     display: flex;
     justify-content: space-between;
@@ -71,6 +78,12 @@ footer {
     border-radius: 1rem;
     padding: 1rem;
     width: fit-content;
+    height: fit-content;
+}
+
+.blur {
+    filter: blur(2.5px);
+    transition: filter 0.2s ease-in-out;
 }
 
 button {

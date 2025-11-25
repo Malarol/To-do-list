@@ -1,8 +1,9 @@
 class Task {
-  constructor(name, status, type) {
+  constructor(name, status, type, importancy) {
     this.name = name;
     this.status = status;
     this.type = type;
+    this.importancy = importancy;
   }
 
   getName() {
@@ -15,6 +16,10 @@ class Task {
 
   getStatus() {
     return this.status;
+  }
+
+  getImportancy() {
+    return this.importancy;
   }
 
   getCheckBoxName() {
@@ -33,31 +38,67 @@ class Task {
 
 const createBtn = document.getElementById("create"); 
 const popUpBtn = document.getElementById("OpenPopUp");
+const switchModeBtn = document.getElementById("switchMode");
 const refreshBtn = document.getElementById("refresh");
 
 popUpBtn.addEventListener("click", taskMenu);
 createBtn.addEventListener("click", createTask);
 refreshBtn.addEventListener("click", updateHTML);
+switchModeBtn.addEventListener("click", switchMode);
 
 let tasks = [];
+
+let mode = true;
 
 function taskMenu() {
   let visibility = document.getElementById("popup");
   visibility.classList.remove("closed");
   visibility.classList.add("open");
 
+  document.querySelector("header").classList.add("blur");
+  document.querySelector("main").classList.add("blur");
+  document.querySelector("footer").classList.add("blur");
+
+  document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+          document.querySelector("header").classList.remove("blur");
+          document.querySelector("main").classList.remove("blur");
+          document.querySelector("footer").classList.remove("blur");
+
+          visibility.classList.remove("open");
+          visibility.classList.add("closed");
+      }
+  });
+
+}
+
+function switchMode() {
+  if (mode === true) {
+    mode = false;
+    switchModeBtn.innerText = "Mode: Hectic";
+  }
+  else if (mode === false) {
+    mode = true;
+    switchModeBtn.innerText = "Mode: Standard";
+  }
+  updateHTML();
 }
 
 function createTask() {
   let newName = document.getElementById("name");
   let newType = document.getElementById("taskType");
+  let important = document.getElementById("important");
 
-  let newClass = new Task(newName.value, true, newType.value);
+  let newClass = new Task(newName.value, true, newType.value, important.value);
   tasks.push(newClass);
   
   let visibility = document.getElementById("popup");
   visibility.classList.remove("open");
   visibility.classList.add("closed");
+
+  document.querySelector("header").classList.remove("blur");
+  document.querySelector("main").classList.remove("blur");
+  document.querySelector("footer").classList.remove("blur");
 
   updateHTML();
 }
@@ -71,14 +112,26 @@ function updateHTML() {
     }
   }
 
+
   tasks = tasks.filter(task => task.getStatus() === true);
+
+  hecticTasks = tasks.filter(task => task.getImportancy() >= 5);
+  
+  let useTasks; 
+
+  if (mode === true) {
+    useTasks = tasks;
+  }
+  else if (mode === false) {
+    useTasks = hecticTasks;
+  }
 
   let main = document.querySelector("main");
   main.innerHTML = "";
 
-  for (let i = 0; i < tasks.length; i++) {
+  for (let i = 0; i < useTasks.length; i++) {
 
-    let task = tasks[i];
+    let task = useTasks[i];
 
     let newDiv = document.createElement("div");
     newDiv.className = "task";
@@ -88,6 +141,9 @@ function updateHTML() {
 
     let newTaskType = document.createElement("p");
     newTaskType.innerText = "Type: " + task.getType();
+
+    let newTaskImportancy = document.createElement("p");
+    newTaskImportancy.innerText = "Importancy:" + task.getImportancy(); 
 
     let newTaskBox = document.createElement("input");
     newTaskBox.type = "checkbox";
@@ -101,6 +157,7 @@ function updateHTML() {
 
     newDiv.appendChild(newTaskName);
     newDiv.appendChild(newTaskType);
+    newDiv.appendChild(newTaskImportancy);
     newDiv.appendChild(newTaskBox);
 
     main.appendChild(newDiv);

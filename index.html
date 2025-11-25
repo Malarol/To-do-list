@@ -12,6 +12,7 @@
 
     <header>
         <h1>To do list</h1>
+        <button id = "switchMode">Mode: Standard</button>
         <button id = "OpenPopUp">Create Task</button>
     </header>
 
@@ -21,12 +22,20 @@
             <p>Enter task name</p>
             <input id="name">
             <p>Select task type</p>
-            <input id="taskType">
+            <select id="taskType">
+                <option value="helse">Health</option>
+                <option value="skule">School</option>
+                <option value="kreativ">Creative</option>
+                <option value="andre">Other</option>
+            </select>
+            <p>Select importancy (1-10) </p>
+            <input id = "important" type="number">
             <button id="create">Create+</button>
         </div>
     </div>    
 
     <main>
+        <p>No tasks yet</p>
     </main>
 
     <footer>
