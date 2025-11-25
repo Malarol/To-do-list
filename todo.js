@@ -1,7 +1,7 @@
 class Task {
   constructor(name, status, type) {
     this.name = name;
-    this.status = status; // true = behold, false = slett
+    this.status = status;
     this.type = type;
   }
 
@@ -21,80 +21,80 @@ class Task {
     return this.name.toString() + this.type.toString();
   }
 
-  // checked = slett (status=false)
-  // unchecked = behold (status=true)
+
   changeStatus(checkbox) {
-    this.status = !checkbox.checked;
+    if (checkbox.checked === true) {
+      this.status = false;
+    } else {
+      this.status = true;
+    }
   }
 }
-
-let tasks = [];
 
 const createBtn = document.getElementById("create"); 
 const popUpBtn = document.getElementById("OpenPopUp");
 const refreshBtn = document.getElementById("refresh");
 
-createBtn.addEventListener("click", createTask);
 popUpBtn.addEventListener("click", taskMenu);
+createBtn.addEventListener("click", createTask);
 refreshBtn.addEventListener("click", updateHTML);
+
+let tasks = [];
+
+function taskMenu() {
+  let visibility = document.getElementById("popup");
+  visibility.classList.remove("closed");
+  visibility.classList.add("open");
+
+}
 
 function createTask() {
   let newName = document.getElementById("name");
   let newType = document.getElementById("taskType");
 
-  // Ny task skal beholdes (unchecked)
-  const newClass = new Task(newName.value, true, newType.value);
+  let newClass = new Task(newName.value, true, newType.value);
   tasks.push(newClass);
   
   let visibility = document.getElementById("popup");
   visibility.classList.remove("open");
   visibility.classList.add("closed");
 
-  let body = document.querySelector("Body");
-  body.classList.remove("bodyOpen");
-
   updateHTML();
 }
 
 function updateHTML() {
-
-  // 1. Oppdater status basert på EKSISTERENDE checkboxes
-  tasks.forEach(task => {
-    const oldBox = document.getElementById(task.getCheckBoxName());
-    if (oldBox) {
+  for (let i = 0; i < tasks.length; i++) {
+    let task = tasks[i];
+    let oldBox = document.getElementById(task.getCheckBoxName());
+    if (oldBox !== null) {
       task.changeStatus(oldBox);
     }
-  });
+  }
 
-  // 2. Fjern tasks der status = false
   tasks = tasks.filter(task => task.getStatus() === true);
 
-  // 3. Tøm HTML
-  const main = document.querySelector("main");
+  let main = document.querySelector("main");
   main.innerHTML = "";
 
-  // 4. Tegn alle tasks på nytt
-  tasks.forEach(task => {
+  for (let i = 0; i < tasks.length; i++) {
 
-    const newDiv = document.createElement("div");
+    let task = tasks[i];
+
+    let newDiv = document.createElement("div");
     newDiv.className = "task";
 
-    const newTaskName = document.createElement("p");
+    let newTaskName = document.createElement("p");
     newTaskName.innerText = "Task: " + task.getName();
 
-    const newTaskType = document.createElement("p");
+    let newTaskType = document.createElement("p");
     newTaskType.innerText = "Type: " + task.getType();
 
-    const newTaskBox = document.createElement("input");
+    let newTaskBox = document.createElement("input");
     newTaskBox.type = "checkbox";
     newTaskBox.id = task.getCheckBoxName();
 
-    // 👇 Viktig:
-    // status=true → behold → unchecked
-    // status=false → slett → checked
     newTaskBox.checked = !task.getStatus();
 
-    // Oppdater status når checkboxen trykkes
     newTaskBox.addEventListener("change", () => {
       task.changeStatus(newTaskBox);
     });
@@ -104,17 +104,5 @@ function updateHTML() {
     newDiv.appendChild(newTaskBox);
 
     main.appendChild(newDiv);
-  });
-}
-
-function taskMenu() {
-  let visibility = document.getElementById("popup");
-  visibility.classList.remove("closed");
-  visibility.classList.add("open");
-
-  let body = document.querySelector("Body");
-  body.classList.add("bodyOpen");
-
-  // let body = document.querySelector("Body")
-  // body.style.setProperty("background", "rgba(0, 0, 0, 0.2)")
-}
+  }
+};
