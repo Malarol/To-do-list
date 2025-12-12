@@ -45,7 +45,8 @@ footer {
 .task {
     display: flex;
     justify-content: space-around;
-    background-color: #F8F8F8;
+    background-color: beige;
+    color: darkgreen;
     border: 2px solid rgb(200, 200, 200);
     border-radius: 1rem;
     margin: 0.5rem;
@@ -87,8 +88,8 @@ footer {
 }
 
 button {
-    background-color: blueviolet;
-    color: white;
+    background-color: darkgreen;
+    color: beige;
     font-size: 1rem;
     border-radius: 1rem;
     height: 4rem;
@@ -97,7 +98,7 @@ button {
 }
 
 button:hover {
-    background-color: white;
-    color: blueviolet;
+    background-color: beige;
+    color: darkgreen;
     transform: scale(1.02)
 }
